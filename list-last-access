@@ -32,11 +32,10 @@ gears.each do |uuid, last_access|
   apps.each do |app|
     next unless app.respond_to? :domain
     domain = app.domain
-    owner = domain.owner
-    login = owner.login
-    result[app.domain.owner.login] ||= {}
-    result[app.domain.owner.login]["#{app.name}-#{domain.namespace}"] ||= {}
-    result[app.domain.owner.login]["#{app.name}-#{domain.namespace}"][uuid] = last_access
+    login = domain.owner.login
+    result[login] ||= {}
+    result[login]["#{app.name}-#{domain.namespace}"] ||= {}
+    result[login]["#{app.name}-#{domain.namespace}"][uuid] = last_access
   end
 end
 
