@@ -32,15 +32,15 @@ A custom mcollective agent that interacts with OpenShift
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{mco_agent_root}
-cp -p mcollective/agent/openshift_custom.rb %{buildroot}%{mco_agent_root}
-cp -p mcollective/agent/openshift_custom.ddl %{buildroot}%{mco_agent_root}
+cp -p mcollective/agent/osocustom.rb %{buildroot}%{mco_agent_root}
+cp -p mcollective/agent/osocustom.ddl %{buildroot}%{mco_agent_root}
 
 %clean
 rm -rf %{buildroot}
 
 %files
-%{mco_agent_root}openshift_custom.rb
-%{mco_agent_root}openshift_custom.ddl
+%{mco_agent_root}osocustom.rb
+%{mco_agent_root}osocustom.ddl
 
 %changelog
 * Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.3-1

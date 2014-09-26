@@ -9,7 +9,7 @@ abort "Usage: list-last-access <interval in days>" unless ARGV[0]
 # in days
 interval = ARGV[0].to_i
 
-mc = rpcclient("helloworld")
+mc = rpcclient("osocustom")
 mc.verbose = false
 mc.progress = false
 
