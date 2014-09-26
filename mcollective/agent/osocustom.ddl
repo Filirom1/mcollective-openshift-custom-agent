@@ -1,4 +1,4 @@
-metadata :name        => "openshift_custom",
+metadata :name        => "osocustom",
          :description => "Custom Agent that interacts with Openhift",
          :author      => "Filirom1",
          :license     => "Apache 2",

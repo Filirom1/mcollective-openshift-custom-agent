@@ -9,18 +9,17 @@
 %endif
 
 Name:		mcollective-openshift-custom-agent
-Version:	0.1
+Version:	0.4
 Release:	1%{?dist}
 Summary:	A custom mcollective agent that interacts with OpenShift
 
-Group:		
+Group:          System Environment/Daemons
 License:	ASL 2.0
 URL:		https://github.com/Filirom1/mcollective-agent-openshift-custom
 Source0:	https://github.com/Filirom1/mcollective-agent-openshift-custom/archive/master.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-Requires:	ruby
-Requires:	mcollective
+Requires:	%{?scl:%scl_prefix}mcollective
 
 %description
 A custom mcollective agent that interacts with OpenShift
@@ -31,12 +30,27 @@ A custom mcollective agent that interacts with OpenShift
 %build
 
 %install
+rm -rf %{buildroot}
 mkdir -p %{buildroot}%{mco_agent_root}
-cp -p src/openshift-custom.rb %{buildroot}%{mco_agent_root}
-cp -p src/openshift-custom.ddl %{buildroot}%{mco_agent_root}
+cp -p mcollective/agent/osocustom.rb %{buildroot}%{mco_agent_root}
+cp -p mcollective/agent/osocustom.ddl %{buildroot}%{mco_agent_root}
+
+%clean
+rm -rf %{buildroot}
 
 %files
-%{mco_agent_root}openshift.rb
-%{mco_agent_root}openshift.ddl
+%{mco_agent_root}osocustom.rb
+%{mco_agent_root}osocustom.ddl
 
 %changelog
+* Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.4-1
+- fix spec file (Filirom1@gmail.com)
+
+* Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.3-1
+- fix spec file (Filirom1@gmail.com)
+- fix spec file (Filirom1@gmail.com)
+- fix spec file (Filirom1@gmail.com)
+
+* Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.2-1
+- new package built with tito
+
