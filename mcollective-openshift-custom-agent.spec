@@ -40,8 +40,8 @@ cp -p mcollective/agent/openshift_custom.ddl %{buildroot}%{mco_agent_root}
 rm -rf %{buildroot}
 
 %files
-%{mco_agent_root}openshift.rb
-%{mco_agent_root}openshift.ddl
+%{mco_agent_root}openshift_custom.rb
+%{mco_agent_root}openshift_custom.ddl
 
 %changelog
 * Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.2-1
