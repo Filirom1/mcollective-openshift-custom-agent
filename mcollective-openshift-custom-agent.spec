@@ -9,11 +9,11 @@
 %endif
 
 Name:		mcollective-openshift-custom-agent
-Version:	0.1
+Version:	0.2
 Release:	1%{?dist}
 Summary:	A custom mcollective agent that interacts with OpenShift
 
-Group:		
+Group:          System Environment/Daemons
 License:	ASL 2.0
 URL:		https://github.com/Filirom1/mcollective-agent-openshift-custom
 Source0:	https://github.com/Filirom1/mcollective-agent-openshift-custom/archive/master.tar.gz
@@ -31,12 +31,19 @@ A custom mcollective agent that interacts with OpenShift
 %build
 
 %install
+rm -rf %{buildroot}
 mkdir -p %{buildroot}%{mco_agent_root}
 cp -p mcollective/agent/openshift-custom.rb %{buildroot}%{mco_agent_root}
 cp -p mcollective/agent/openshift-custom.ddl %{buildroot}%{mco_agent_root}
+
+%clean
+rm -rf %{buildroot}
 
 %files
 %{mco_agent_root}openshift.rb
 %{mco_agent_root}openshift.ddl
 
 %changelog
+* Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.2-1
+- new package built with tito
+
