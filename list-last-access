@@ -1,0 +1,59 @@
+#!/usr/bin/env oo-ruby
+
+require 'mcollective'
+require "#{ENV['OPENSHIFT_BROKER_DIR'] || '/var/www/openshift/broker'}/config/environment"
+include MCollective::RPC
+
+abort "Usage: list-last-access <interval in days>" unless ARGV[0]
+
+# in days
+interval = ARGV[0].to_i
+
+mc = rpcclient("helloworld")
+mc.verbose = false
+mc.progress = false
+
+gears = {}
+
+mc.list_last_access().each do |resp|
+  resp[:data][:msg].each do |access|
+    gears[access[:uuid]] = access[:last_access]
+  end
+end
+
+result = {}
+
+# group gears by application and by user
+gears.each do |uuid, last_access|
+  last_access = DateTime.strptime(last_access, '%d/%b/%Y:%H:%M:%S %Z')
+  apps,gear = Application.find_by_gear_uuid(uuid)
+  apps      = Application.where(uuid: uuid) unless apps
+  apps = [apps] unless apps.kind_of?(Array)
+  apps.each do |app|
+    next unless app.respond_to? :domain
+    domain = app.domain
+    owner = domain.owner
+    login = owner.login
+    result[app.domain.owner.login] ||= {}
+    result[app.domain.owner.login]["#{app.name}-#{domain.namespace}"] ||= {}
+    result[app.domain.owner.login]["#{app.name}-#{domain.namespace}"][uuid] = last_access
+  end
+end
+
+# remove gears accessed during interval
+result.each do |login, applications|
+  applications.each do |app_id, gears|
+    if gears.values.select { |last_access| last_access > (DateTime.now - interval) }.length > 0
+      applications.delete(app_id) 
+    end
+  end
+end
+
+# print 
+result.each do |login, applications|
+  next unless applications.length > 0
+  app_names = applications.keys.join ','
+  puts "#{login} #{app_names}"
+end
+
+mc.disconnect
