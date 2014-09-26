@@ -9,7 +9,7 @@
 %endif
 
 Name:		mcollective-openshift-custom-agent
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	A custom mcollective agent that interacts with OpenShift
 
@@ -43,6 +43,11 @@ rm -rf %{buildroot}
 %{mco_agent_root}openshift_custom.ddl
 
 %changelog
+* Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.3-1
+- fix spec file (Filirom1@gmail.com)
+- fix spec file (Filirom1@gmail.com)
+- fix spec file (Filirom1@gmail.com)
+
 * Fri Sep 26 2014 Filirom1 <Filirom1@gmail.com> 0.2-1
 - new package built with tito
 
