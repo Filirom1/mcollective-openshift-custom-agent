@@ -19,8 +19,7 @@ URL:		https://github.com/Filirom1/mcollective-agent-openshift-custom
 Source0:	https://github.com/Filirom1/mcollective-agent-openshift-custom/archive/master.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-Requires:	ruby
-Requires:	mcollective
+Requires:	%{?scl:%scl_prefix}mcollective
 
 %description
 A custom mcollective agent that interacts with OpenShift
